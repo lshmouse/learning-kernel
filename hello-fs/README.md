@@ -2,29 +2,31 @@
 
 ### Steps
 * Registering A New File-System
-  See: include/linux/fs.h 
-  ```
-  struct file_system_type {
-    const char *name;
-    int fs_flags;
-    struct super_block *(*mount) (struct super_block *, void *, int);
-    void (*kill_sb) (struct super_block *);
-    ...
-  };
-  ```
-  Using register_filesystem/unregister_filesystem
+
+See: include/linux/fs.h 
+```
+struct file_system_type {
+  const char *name;
+  int fs_flags;
+  struct super_block *(*mount) (struct super_block *, void *, int);
+  void (*kill_sb) (struct super_block *);
+  ...
+};
+```
+Using register_filesystem/unregister_filesystem
 
 * mount/umount File System
-  See mount_fs in fs/super.c  
-  ```
-  struct dentry * mount_fs(struct file_system_type *type, int flags, const char *name, void *data) {
-    ...
-    root = type->mount(type, flags, name, data);
-    ...
-  }
-  ```
 
-  See deactivate_locked_super in fs/super.c
+See mount_fs in fs/super.c  
+```
+struct dentry * mount_fs(struct file_system_type *type, int flags, const char *name, void *data) {
+  ...
+    root = type->mount(type, flags, name, data);
+  ...
+}
+```
+
+See deactivate_locked_super in fs/super.c
   ```
 void deactivate_locked_super(struct super_block *s)                                                                                                                               
 {                                                                                                        
@@ -78,6 +80,7 @@ struct super_operations {
 ```
 
 * Inodes Operations
+
 Inode opreations see include/linux/fs.h
 ```
 struct inode_operations {                                                                            
@@ -122,6 +125,7 @@ struct inode_operations {
 ```
 
 * Dentries opreations
+
 Dentries operations see include/dcache.h
 
 ```
@@ -142,7 +146,8 @@ struct dentry_operations {
    
 ```
 * Files
-Files opreations see include/linux/fs.h
+
+Files operations see include/linux/fs.h
 ```
 struct file_operations {                                                                                 
   struct module *owner;                                                                                  
@@ -178,6 +183,7 @@ struct file_operations {
   void (*show_fdinfo)(struct seq_file *m, struct file *f);                                               
 }; 
 ```
+
 ### Reference
 - http://haifux.org/lectures/120/writing-linux-2.4-fs/writing-linux-2.4-fs.html
 - http://kukuruku.co/hub/nix/writing-a-file-system-in-linux-kernel
